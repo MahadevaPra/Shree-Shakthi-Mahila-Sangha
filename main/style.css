@@ -1,0 +1,35 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    width: 100%;
+    padding: 20px 0px 10px 0px;
+    color: #ffffff;
+    background-color: rgb(50, 50, 50);
+    display: flex;
+    justify-content: space-between;
+}
+
+header img{
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+}
+
+header h2{
+    margin-top: 10px;
+    color: rgb(183, 179, 170);
+    font-family: italic;
+}
+
+i a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+header a:hover{
+    color: orangered;
+    text-decoration: underline;
+}

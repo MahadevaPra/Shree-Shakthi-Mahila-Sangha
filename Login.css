@@ -1,0 +1,124 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    width: 100%;
+    padding: 10px 0px 10px 0px;
+    color: #ffffff;
+    background-color: rgb(50, 50, 50);
+    display: flex;
+    justify-content: space-between;
+}
+
+header img{
+    height: 50px;
+    width: 50px;
+    background-size: cover;
+}
+
+header h2{
+    margin-top: 10px;
+    color: rgb(183, 179, 170);
+    font-family: italic;
+}
+
+header a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+header a:hover{
+    color: orangered;
+    text-decoration: underline;
+}
+
+main{
+    height: 555px;
+    width: 100%;
+    background-color: rgb(40, 40, 40);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main div{
+    height: 400px;
+    width: 600px;
+    color: #ffffff;
+    background-color: rgb(41, 40, 40);
+    box-shadow: 0px 8px 10px rgba(255, 255, 255, 0.25);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main h2{
+    margin-top: 10px;
+    margin-bottom: 50px;
+    width: 600px;
+    text-align: center;
+}
+
+main label{
+    font-weight: 500;
+}
+
+main input{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #ccc;
+    width: 300px;
+    height: 20px;
+    border-radius: 5px;
+}
+
+.Buttons{
+    height: 50px;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.Button{
+    margin: 5px 20px 10px 0px;
+    height: 20px;
+    width: 60px;
+    border-radius: 5px;
+    background-color: darkcyan;
+}
+
+main a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+main a:hover{
+    color: orangered;
+    text-decoration: underline;
+}
+
+footer{
+    width: 100%;
+    color: #ffffff;
+    padding: 10px 0px 20px 0px;
+    background-color: rgb(50, 50, 50);
+    display: flex;
+    justify-content: space-around;
+}
+
+footer pre{
+    font-family: 'Times New Roman', Times, serif; 
+}
+
+footer a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+footer a:hover{
+    color: orangered;
+    text-decoration: underline;
+}
