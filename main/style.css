@@ -25,6 +25,8 @@ header h2{
 }
 
 i a{
+    padding-right: 10px;
+    font-size: 20px;
     color: #ffffff;
     text-decoration: none;
 }
