@@ -24,7 +24,7 @@ header h2{
     font-family: italic;
 }
 
-i a{
+b a{
     padding-right: 10px;
     font-size: 20px;
     color: #ffffff;
@@ -53,4 +53,22 @@ main div{
     color: red;
     font-weight: bold;
     font-family: cursive;
+}
+
+marquee{
+    line-height: 25px;
+    margin-left: 10px;
+}
+
+.banner{
+    margin-top: 10px;
+    margin-left: 10px;
+    height: 400px;
+    width: 600px;
+    border-radius: 10px;
+    display: inline;
+}
+
+main p{
+    display: inline;
 }
