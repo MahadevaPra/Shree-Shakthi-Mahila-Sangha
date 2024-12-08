@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stree Shakthi Mahila Sangha | Signin</title>
+        <style>
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background: linear-gradient(to right, #f7f7f7, #e1e1e1); /* Soft grey gradient for a clean look */
+    color: #333; /* Dark text for better readability */
+    font-size: 16px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    color: #333; /* Dark text for the header */
+    background-color: transparent;
+}
+
+header img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+header h2 {
+    font-size: 26px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+header i {
+    font-size: 16px;
+}
+
+header a {
+    background-color: #9bc6ff; /* Dark greyish-blue background for the button */
+    color: #fff; /* White text for contrast */
+    text-decoration: none;
+    padding: 12px 20px; /* Slightly larger padding for better button feel */
+    border-radius: 30px; /* Slightly rounder corners */
+    font-size: 16px; /* Increased font size for better visibility */
+    font-weight: bold; /* Bold text for emphasis */
+    letter-spacing: 1px; /* Space between letters for a formal look */
+    transition: background-color 0.3s, transform 0.2s ease, box-shadow 0.3s; /* Adding box-shadow transition */
+}
+
+header a:hover {
+    background-color: #4ba2f9; /* Slightly lighter shade of the same color on hover */
+    transform: scale(1.05); /* Slight enlargement effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Adding shadow on hover for depth */
+}
+
+
+/* Main Section */
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+form {
+    background: #fff; /* White background for the form */
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Light shadow for subtle depth */
+    width: 400px;
+    max-width: 100%;
+    transform: translateY(-50px);
+    animation: formAnimation 1s ease-in-out;
+}
+
+@keyframes formAnimation {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+label {
+    font-size: 16px;
+    color: #555; /* Dark grey text for labels */
+    display: block;
+    margin: 15px 0 5px;
+}
+
+input[type="text"], input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc; /* Light grey border */
+    border-radius: 10px;
+    font-size: 16px;
+    background-color: #f9f9f9; /* Light grey background for inputs */
+    transition: background-color 0.3s;
+}
+
+input[type="text"]:focus, input[type="password"]:focus {
+    background-color: #fff; /* White background on focus */
+    border-color: #0072ff; /* Blue border on focus */
+    outline: none;
+}
+
+input[type="submit"] {
+    background-color: #0072ff; /* Blue background for the submit button */
+    color: white;
+    padding: 14px;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+input[type="submit"]:hover {
+    background-color: #005bb5; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight enlargement on hover */
+}
+
+i {
+    font-size: 14px;
+    color: #777; /* Light grey text for the "forgot password" link */
+    display: block;
+    margin-top: 20px;
+}
+
+i a {
+    color: #0072ff; /* Blue text for the "forgot password" link */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+i a:hover {
+    color: #005bb5; /* Darker blue on hover */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #f0f0f0; /* Light grey background for the footer */
+    color: #333;
+    padding: 30px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    flex-wrap: wrap;
+    border-top: 1px solid #ccc; /* Light grey border on top */
+}
+
+footer .footer-left, footer .footer-right {
+    font-size: 14px;
+}
+
+footer .footer-left {
+    text-align: left;
+    flex: 1;
+}
+
+footer .footer-right {
+    text-align: right;
+    flex: 1;
+}
+
+footer pre {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+footer a {
+    color: #0072ff; /* Blue color for links */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+footer a:hover {
+    color: #005bb5; /* Darker blue on hover */
+}
+
+footer .terms-links {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+footer .terms-links a {
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <img src="C:\Users\mahad\Desktop\github\Shree-Shakthi-Mahila-Sangha\images\logo.jpg" alt="Logo">
+            <h2>Stree Shakti Sangha , Mysuru</h2>
+            <i>Don't have an account? <a href="/ssms/signup" target="_blank">Sign Up</a></i>
+        </header>
+        <main>
+            <form action="/login" method="get">
+                <div class="mainclass">
+                    <h2 style="margin: 15px 0px 80px 0px;">Welcome , Login</h2>
+                    <div class="submain">
+                        <label for="id">User-id </label>
+                        <input type="text" name="id" id="id" placeholder="Enter your user-id" required>
+                        <label for="Password">Password: </label>
+                        <input type="password" name="Password" id="Password" placeholder="Type your password" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                        title="Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character." required>
+                        <input type="submit" value="Submit" class="Button">
+                        <i>Forgot Password ?<a href="/ssms/forgot" target="_blank">Click here</a></i>
+                    </div>
+                </div>
+            </form>
+        </main>
+        <footer>
+            <pre>
+                Contact us:
+                        Phone Number :
+                        Email : prasuprasu148@gmail.com
+            </pre>
+            <pre>
+                All rights reserved in this website.
+                &copy; Copyrighted under Act 1957
+            </pre>
+            <pre>
+                <a href="#">Terms & Conditions</a>
+                
+                <a href="#">Privacy & Policy</a>
+            </pre>
+        </footer>
+    </body>
+</html>
