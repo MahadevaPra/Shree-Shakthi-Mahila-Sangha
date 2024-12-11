@@ -16,6 +16,11 @@ app.use(bodyParser.json());
 // Serve static files from the Frontend folder
 app.use(express.static(path.join(__dirname, '../Frontend')));
 
+// Load the logo for the header
+app.get('/image/logo', (req,res) => {
+  res.sendFile(path.join(__dirname,"../images/logo.jpg"));
+});
+
 // Route to serve index.html
 app.get('/ssms', (req, res) => {
     res.sendFile(path.join(__dirname, '../Frontend/main/index.html'));
@@ -49,8 +54,8 @@ app.get('/ssms/signup', (req, res) => {
   res.sendFile(path.join(__dirname, '../Frontend/Signup.html'));
 });
 
-app.get('/ssms/forgot',(req,res) =>{
-  res.sendFile(path.join(__dirname,'../Frontend/Forgot.html'));
+app.get('/ssms/forgot',(req, res) => {
+  res.sendFile(path.join(__dirname, '../Frontend/Forgot.html'));
 });
 
 app.get('/ssms/intro',(req,res) => {
@@ -89,7 +94,7 @@ app.post('/register', (req, res) => {
 });
 
 // POST route for login
-app.get('/login', (req, res) => {
+app.get('/ssms/login', (req, res) => {
   const { id, Password } = req.query;
 
   // Query to fetch user data
@@ -103,7 +108,7 @@ app.get('/login', (req, res) => {
       }
 
       // Check if user exists and credentials match
-      if (results.length === 0) {
+      if (results.length !== 0) {
           return res.status(401).send(`
               <script>
                   alert("Invalid user details");
@@ -122,8 +127,53 @@ app.get('/login', (req, res) => {
   });
 });
 
+app.post('/ssms/forgot',(req,res) => {
+  const {id, Password, cPassword} = req.body;
+
+  if(Password !== cPassword){
+    res.status(400).send(`
+      <script>
+        alert('Passwords do not match');
+        window.history.back();
+      </script>
+      `);
+   }
+
+   else{
+    const updateQuery = `update admin_info set Password = ? where User_id = ?`;
+    
+    db.query(updateQuery, [Password, id] , (err, results) => {
+  if(err){
+    console.error('Cannot update password:', err);
+        res.status(400).send(`
+          <script>
+            alert('Password cannot be changed , try after sometime..');
+            window.location.href = '/ssms/signin';
+          </script>
+          `); 
+        }
+        else if (results.affectedRows === 0) {
+            res.status(404).send(`
+            <script>
+              alert('User not found');
+             window.history.back();
+            </script>
+          `);
+          }
+          else{
+    res.status(200).send(`
+      <script>
+        alert('Passwords changed succesfully..!');
+        window.location.href = '/ssms/signin';
+      </script>
+      `); 
+    }
+    });
+  }
+});
 
 // Start the server
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
+  console.log('Click link to open website: localhost:3000/ssms');
 });

@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 30, 2024 at 05:05 PM
+-- Generation Time: Dec 09, 2024 at 11:12 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,58 +24,78 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `add_members`
+-- Table structure for table `admin_info`
 --
 
-CREATE TABLE `add_members` (
-  `member_id` int(11) NOT NULL,
-  `user_name` varchar(15) NOT NULL,
-  `initial_saving` int(15) NOT NULL,
-  `acc_no` int(15) NOT NULL
+CREATE TABLE `admin_info` (
+  `id` int(11) NOT NULL,
+  `S_id` int(11) NOT NULL,
+  `User_id` varchar(255) NOT NULL,
+  `Phone_num` bigint(20) NOT NULL,
+  `Email` varchar(255) NOT NULL,
+  `Password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `add_members`
+-- Dumping data for table `admin_info`
 --
 
-INSERT INTO `add_members` (`member_id`, `user_name`, `initial_saving`, `acc_no`) VALUES
-(123, 'samyuktha', 12000, 675886);
+INSERT INTO `admin_info` (`id`, `S_id`, `User_id`, `Phone_num`, `Email`, `Password`) VALUES
+(1, 2, '1', 1234567984, 'ravi@gmail.com', '1235'),
+(3, 2, '2', 1234567984, 'mahadevaprasadcs23@gmail.com', 'Akas@123');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `signup`
+-- Table structure for table `members`
 --
 
-CREATE TABLE `signup` (
-  `S_id` int(20) NOT NULL,
-  `user_name` varchar(15) NOT NULL,
-  `ph_no` int(10) NOT NULL,
-  `password` int(10) NOT NULL
+CREATE TABLE `members` (
+  `Mem_id` int(30) NOT NULL,
+  `Name` varchar(50) NOT NULL,
+  `Savings` int(50) NOT NULL,
+  `Loan` int(50) NOT NULL,
+  `Ac_number` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `signup`
+-- Table structure for table `s_total`
 --
 
-INSERT INTO `signup` (`S_id`, `user_name`, `ph_no`, `password`) VALUES
-(4546, 'mahadev', 75844533, 38675);
+CREATE TABLE `s_total` (
+  `T_members` int(10) NOT NULL,
+  `T_money` int(10) NOT NULL,
+  `T_loan` int(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `add_members`
+-- Indexes for table `admin_info`
 --
-ALTER TABLE `add_members`
-  ADD PRIMARY KEY (`member_id`);
+ALTER TABLE `admin_info`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `User_id` (`User_id`);
 
 --
--- Indexes for table `signup`
+-- Indexes for table `members`
 --
-ALTER TABLE `signup`
-  ADD PRIMARY KEY (`S_id`);
+ALTER TABLE `members`
+  ADD PRIMARY KEY (`Mem_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin_info`
+--
+ALTER TABLE `admin_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
