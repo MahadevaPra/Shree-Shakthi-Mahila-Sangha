@@ -12,18 +12,33 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
 // Serve static files from the Frontend folder
 app.use(express.static(path.join(__dirname, '../Frontend')));
 
-// Load the logo for the header
-app.get('/image/logo', (req,res) => {
-  res.sendFile(path.join(__dirname,"../images/logo.jpg"));
+// Serve the logo for the header
+app.get('/image/logo', (req, res) => {
+  res.sendFile(path.join(__dirname, "../images/logo.jpg"));
 });
 
-// Route to serve index.html
+// Routes for serving HTML pages
 app.get('/ssms', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Frontend/main/index.html'));
+  res.sendFile(path.join(__dirname, '../Frontend/main/index.html'));
+});
+
+app.get('/ssms/signin', (req, res) => {
+  res.sendFile(path.join(__dirname, '../Frontend/Signin.html'));
+});
+
+app.get('/ssms/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, '../Frontend/Signup.html'));
+});
+
+app.get('/ssms/forgot', (req, res) => {
+  res.sendFile(path.join(__dirname, '../Frontend/Forgot.html'));
+});
+
+app.get('/ssms/intro', (req, res) => {
+  res.sendFile(path.join(__dirname, '../Frontend/intro.html'));
 });
 
 // MySQL Database Connection
@@ -43,37 +58,18 @@ db.connect((err) => {
   console.log('Connected to MySQL Database');
 });
 
-// Serve static files (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname, '../Frontend')));
-
-app.get('/ssms/signin', (req, res) => {
-  res.sendFile(path.join(__dirname, '../Frontend/Signin.html'));
-});
-
-app.get('/ssms/signup', (req, res) => {
-  res.sendFile(path.join(__dirname, '../Frontend/Signup.html'));
-});
-
-app.get('/ssms/forgot',(req, res) => {
-  res.sendFile(path.join(__dirname, '../Frontend/Forgot.html'));
-});
-
-app.get('/ssms/intro',(req,res) => {
-  res.sendFile(path.join(__dirname,'../Frontend/intro.html'));
-});
-
 // POST route to register a new user
 app.post('/register', (req, res) => {
-  const { Sanghaid, Name, phoneNumber, email,Password, ConfirmPassword } = req.body;
+  const { Sanghaid, Name, phoneNumber, email, Password, ConfirmPassword } = req.body;
 
   // Check if password and confirm password match
   if (Password !== ConfirmPassword) {
     return res.status(400).send(`
       <script>
-      alert('Passwords do not match');
-      window.location.href = '/ssms/signup';
-  </script>`
-);}
+        alert('Passwords do not match');
+        window.location.href = '/ssms/signup';
+      </script>`);
+  }
 
   // Insert data into the database
   const query = `INSERT INTO admin_info (S_id, User_id, Phone_num, Email, Password) VALUES (?, ?, ?, ?, ?)`;
@@ -85,11 +81,9 @@ app.post('/register', (req, res) => {
     // Send success message
     res.status(200).send(`
       <script>
-          alert('Registration successful!');
-          window.location.href = '/ssms/signin';
-      </script>
-  `);
-  
+        alert('Registration successful!');
+        window.location.href = '/ssms/signin';
+      </script>`);
   });
 });
 
@@ -102,78 +96,71 @@ app.get('/ssms/login', (req, res) => {
 
   // Execute the query
   db.query(query, [id, Password], (err, results) => {
-      if (err) {
-          console.error('Database error:', err);
-          return res.status(500).send('Database error');
-      }
+    if (err) {
+      console.error('Database error:', err);
+      return res.status(500).send('Database error');
+    }
 
-      // Check if user exists and credentials match
-      if (results.length !== 0) {
-          return res.status(401).send(`
-              <script>
-                  alert("Invalid user details");
-                  window.history.back();
-              </script>
-          `);
-      }
+    // Check if user exists and credentials match
+    if (results.length === 0) {
+      return res.status(401).send(`
+        <script>
+          alert("Invalid user details");
+          window.history.back();
+        </script>`);
+    }
 
-      // Login successful
-      res.send(`
-          <script>
-              alert("Login Successful");
-              window.location.href = '/ssms/intro'; // Redirect to intro page
-          </script>
-      `);
+    // Login successful
+    res.send(`
+      <script>
+        alert("Login Successful");
+        window.location.href = '/ssms/intro'; // Redirect to intro page
+      </script>`);
   });
 });
 
-app.post('/ssms/forgot',(req,res) => {
-  const {id, Password, cPassword} = req.body;
+// POST route for password reset
+app.post('/ssms/forgot', (req, res) => {
+  const { id, Password, cPassword } = req.body;
 
-  if(Password !== cPassword){
-    res.status(400).send(`
+  if (Password !== cPassword) {
+    return res.status(400).send(`
       <script>
         alert('Passwords do not match');
         window.history.back();
-      </script>
-      `);
-   }
+      </script>`);
+  }
 
-   else{
-    const updateQuery = `update admin_info set Password = ? where User_id = ?`;
-    
-    db.query(updateQuery, [Password, id] , (err, results) => {
-  if(err){
-    console.error('Cannot update password:', err);
-        res.status(400).send(`
-          <script>
-            alert('Password cannot be changed , try after sometime..');
-            window.location.href = '/ssms/signin';
-          </script>
-          `); 
-        }
-        else if (results.affectedRows === 0) {
-            res.status(404).send(`
-            <script>
-              alert('User not found');
-             window.history.back();
-            </script>
-          `);
-          }
-          else{
+  const updateQuery = `UPDATE admin_info SET Password = ? WHERE User_id = ?`;
+
+  db.query(updateQuery, [Password, id], (err, results) => {
+    if (err) {
+      console.error('Cannot update password:', err);
+      return res.status(400).send(`
+        <script>
+          alert('Password cannot be changed, try after some time');
+          window.location.href = '/ssms/signin';
+        </script>`);
+    }
+
+    if (results.affectedRows === 0) {
+      return res.status(404).send(`
+        <script>
+          alert('User not found');
+          window.history.back();
+        </script>`);
+    }
+
     res.status(200).send(`
       <script>
-        alert('Passwords changed succesfully..!');
+        alert('Password changed successfully!');
         window.location.href = '/ssms/signin';
-      </script>
-      `); 
-    }
-    });
-  }
+      </script>`);
+  });
 });
 
 // Start the server
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
-  console.log('Click link to open website: localhost:3000/ssms');
+  console.log('Click on link to open website: localhost:3000/ssms');
 });
