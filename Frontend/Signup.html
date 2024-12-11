@@ -1,211 +1,280 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Stree Shakthi Mahila Sangha | Signup</title>
-        <style>
-            /* Basic Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f7f7f7;
-}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stree Shakti Mahila Sangha | Signup</title>
+    <style>
+        /* Basic Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f4f8;
+        }
 
-/* Header Styles */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background-color: #ffffff;
-    border-bottom: 2px solid #ccc;
-}
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #4A148C;
+            color: white;
+            border-bottom: 2px solid #ccc;
+        }
 
-header .logo img {
-    height: 40px;
-}
+        header .logo img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 50%;
+        }
 
-header h2 {
-    flex-grow: 1;
-    text-align: center;
-    color: #333;
-}
+        header h2 {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #f5f5f5;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
-.signin-link i {
-    font-size: 16px;
-}
+        .signin-link i {
+            font-size: 16px;
+        }
 
-.signin-link a {
-    text-decoration: none;
-    color: #0072ff;
-}
+        .signin-link a {
+            text-decoration: none;
+            color: #fff;
+        }
 
-/* Main Form Section */
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    padding-top: 20px;
-}
+        .signin-link a:hover{
+            text-decoration: #000000;
+            background-color: #9B4F96;
+        }
 
-form {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 700px;
-    max-width: 100%;
-}
+        /* Main Form Section */
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            padding: 20px;
+            gap: 30px;
+            max-width: 100%;
+        }
 
-h2 {
-    font-size: 24px;
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
+        /* Left Sidebar for Explanation */
+        .explanation {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 50%; /* Half width for large screens */
+            min-width: 300px;
+            max-width: 600px;
+        }
 
-/* Form Styling for Single Column */
-label {
-    font-size: 16px;
-    color: #555;
-    margin-bottom: 8px;
-    display: block;
-}
+        .explanation h3 {
+            font-size: 20px;
+            color: #4A148C;
+            margin-bottom: 15px;
+        }
 
-input[type="text"],
-input[type="tel"],
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    background-color: #fafafa;
-    font-size: 16px;
-    transition: border-color 0.3s ease-in-out;
-}
+        .explanation p {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.5;
+        }
 
-input[type="text"]:focus,
-input[type="tel"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus {
-    border-color: #0072ff;
-    outline: none;
-    background-color: #fff;
-}
+        .explanation ul {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.5;
+        }
 
-/* Buttons */
-form .form-buttons {
-    display: flex;
-    justify-content: space-between;
-}
+        /* Form Styling */
+        form {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 50%; /* Half width for large screens */
+            min-width: 300px;
+            max-width: 600px;
+        }
 
-input[type="submit"],
-input[type="reset"] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 6px;
-    font-size: 18px;
-    cursor: pointer;
-    width: 48%;
-}
+        h2 {
+            font-size: 24px;
+            text-align: center;
+            color: #4A148C;
+            margin-bottom: 20px;
+        }
 
-input[type="submit"]:hover,
-input[type="reset"]:hover {
-    background-color: #45a049;
-}
+        /* Form Inputs */
+        label {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 8px;
+            display: block;
+        }
 
-/* Footer Styles */
-footer {
-    background-color: #333;
-    color: white;
-    padding: 20px 40px;
-}
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: #fafafa;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+        }
 
-.footer-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            border-color: #4A148C;
+            outline: none;
+            background-color: #fff;
+        }
 
-.footer-content a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px;
-}
+        /* Buttons */
+        form .form-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
 
-.footer-content a:hover {
-    text-decoration: underline;
-}
+        input[type="submit"],
+        input[type="reset"] {
+            background-color: #4A148C;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 48%;
+        }
 
-.footer-bottom {
-    text-align: center;
-    margin-top: 20px;
-}
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
+            background-color: #9B4F96;
+        }
 
-        </style>
-    </head>
-    <body>
-        <header>
-            <div class="logo">
-                <img src="C:\Users\mahad\Desktop\github\Shree-Shakthi-Mahila-Sangha\images\logo.jpg" alt="Logo">
+        /* Footer Styles */
+        footer {
+            background-color: #4A148C;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-content a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .footer-content a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+                padding: 10px;
+            }
+
+            .explanation, form {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/image/logo" alt="Logo">
+        </div>
+        <h2>Stree Shakti Sangha, Mysuru</h2>
+        <div class="signin-link">
+            <i>Already have an account? <a href="/ssms/signin">Sign In</a></i>
+        </div>
+    </header>
+
+    <main>
+        <!-- Explanation Sidebar -->
+        <div class="explanation">
+            <h3>Password Guidelines</h3>
+            <p>Password must be at least 8 characters long.</p>
+            <p>It should include:</p>
+            <ul>
+                <li>At least one uppercase letter (A-Z)</li>
+                <li>At least one lowercase letter (a-z)</li>
+                <li>At least one number (0-9)</li>
+                <li>At least one special character (e.g., @$!%*?&)</li>
+            </ul>
+        </div>
+
+        <!-- Signup Form -->
+        <form action="/register" method="post">
+            <h2>Sign Up</h2>
+
+            <label for="Sanghaid">Sangha Id:</label>
+            <input type="text" name="Sanghaid" id="Sanghaid" placeholder="Enter your Sangha id" required>
+
+            <label for="Name">User-id:</label>
+            <input type="text" name="Name" id="Name" placeholder="Enter your user-id" required>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Enter your mobile number">
+
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" placeholder="Enter your Email">
+
+            <label for="Password">Password:</label>
+            <input type="password" name="Password" id="Password" placeholder="Type your password" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.">
+
+            <label for="ConfirmPassword">Confirm Password:</label>
+            <input type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm your password" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.">
+
+            <div class="form-buttons">
+                <input type="submit" value="Submit" class="Button">
+                <input type="reset" value="Reset" class="Button">
             </div>
-            <h2>Stree Shakti Sangha , Mysuru</h2>
-            <div class="signin-link">
-                <i>Already have an account? <a href="/ssms/signin">Sign In</a></i>
-            </div>
-        </header>
+        </form>
+    </main>
 
-        <main>
-            <form action="/register" method="post">
-                <h2>Sign Up</h2>
-                <label for="Sanghaid">Sangha Id: </label>
-                <input type="text" name="Sanghaid" id="Sanghaid" placeholder="Enter your Sangha id" required>
-            
-                <label for="Name">User-id: </label>
-                <input type="text" name="Name" id="Name" placeholder="Enter your user-id" required>
-            
-                <label for="phoneNumber">Phone Number:</label>
-                <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Enter your mobile number">
-
-                <label for="email">Email: </label>
-                <input type="email" name="email" id="email" placeholder="Enter your Email">
-            
-                <label for="Password">Password: </label>
-                <input type="password" name="Password" id="Password" placeholder="Type your password" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-                title="Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.">
-            
-                <label for="ConfirmPassword">Confirm Password: </label>
-                <input type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm your password" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-                title="Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.">
-            
-                <div class="form-buttons">
-                    <input type="submit" value="Submit" class="Button">
-                    <input type="reset" value="Reset" class="Button">
-                </div>
-            </form>            
-        </main>
-
-        <footer>
-            <div class="footer-content">
-                <div class="contact-info">
-                    <p>Phone Number: 123-456-7890</p>
-                    <p>Email: prasuprasu148@gmail.com</p>
-                </div>
-                <div class="footer-links">
-                    <a href="#">Terms & Conditions</a>
-                    <a href="#">Privacy & Policy</a>
-                </div>
+    <footer>
+        <div class="footer-content">
+            <div class="contact-info">
+                <p>Phone Number: 123-456-7890</p>
+                <p>Email: prasuprasu148@gmail.com</p>
             </div>
-            <div class="footer-bottom">
-                <p>All rights reserved &copy; Copyrighted under Act 1957</p>
+            <div class="footer-links">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy & Policy</a>
             </div>
-        </footer>
-    </body>
-</html>
+        </div>
+        <div class="footer-bottom">
+            <p>All rights reserved &copy; Copyrighted under Act 1957</p>
+        </div>
