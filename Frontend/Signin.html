@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stree Shakti Mahila Sangha | Login</title>
+    <!-- Font Awesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         /* Global Reset */
         body, html {
@@ -41,18 +43,12 @@
 
         header i {
             font-size: 16px;
-            text-align: right;
         }
 
-        header a{
+        header a {
             font-size: 16px;
             text-decoration: none;
             color: #fff;
-        }
-
-        header a:hover{
-            text-decoration: solid;
-            background-color: #ffaaaa;
         }
 
         /* Card Style */
@@ -85,12 +81,12 @@
         .form-group {
             position: relative;
             margin-bottom: 25px;
+            margin-right: 15px;
         }
 
         .form-group input {
             width: 100%;
             padding: 15px;
-            margin-left: -15px;
             border: 1px solid #ccc;
             border-radius: 8px;
             font-size: 16px;
@@ -124,12 +120,14 @@
         .show-password {
             position: absolute;
             right: 12px;
-            top: 30%;
+            top: 50%;
+            transform: translateY(-50%);
             cursor: pointer;
+            color: #5b2c6f;
         }
 
         .show-password:hover {
-            transform: scale(1.2);
+            color: #9b59b6;
         }
 
         .form-buttons {
@@ -230,8 +228,8 @@
     <!-- Header -->
     <header>
         <img src="/image/logo" alt="Logo">
-        <h2>Stree Shakti Sangha  Mysuru</h2>
-        <i>Don't have an account? <a href="/ssms/signup"> Signup</a></i>
+        <h2>Stree Shakti Sangha Mysuru</h2>
+        <i>Don't have an account? <a href="/ssms/signup">Signup</a></i>
     </header>
 
     <!-- Main Content (Card Form) -->
@@ -240,14 +238,14 @@
 
         <form action="/ssms/login" method="get">
             <div class="form-group">
-                <input type="text" name="user-id" id="user-id" placeholder=" " required autofocus>
+                <input type="text" name="id" id="user-id" placeholder=" " required autofocus>
                 <label for="user-id">User ID &nbsp;*</label>
             </div>
 
             <div class="form-group">
-                <input type="password" name="password" id="password" placeholder=" " required>
+                <input type="password" name="Password" id="password" placeholder=" " required>
                 <label for="password">Password &nbsp;*</label>
-                <i class="show-password" onclick="togglePasswordVisibility()">👁️</i>
+                <i class="fas fa-eye show-password" aria-label="Toggle Password Visibility" onclick="togglePasswordVisibility()"></i>
             </div>
 
             <div class="form-buttons">
@@ -262,7 +260,7 @@
 
     <!-- Footer -->
     <footer>
-       <pre style="font-weight: 500;"> <p>Contact us: Phone Number: 9741605312
+        <pre style="font-weight: 500;"> <p>Contact us: Phone Number: 9741605312
             Email: prasuprasu148@gmail.com</p></pre>
         <p>&copy; All rights reserved under Act 1957</p>
         <p>
@@ -274,8 +272,16 @@
         // Toggle password visibility
         function togglePasswordVisibility() {
             var passwordField = document.getElementById('password');
-            var type = passwordField.type === "password" ? "text" : "password";
-            passwordField.type = type;
+            var icon = document.querySelector('.show-password');
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
         }
     </script>
 </body>

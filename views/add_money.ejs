@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stree Shakthi Mahila Sangha | Add Money</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding: 2rem;
+            margin: 0;
+            color: #343a40;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #343a40;
+            color: white;
+        }
+        td input[type="number"] {
+            padding: 0.5rem;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            width: 80%;
+            margin-bottom: 5px;
+        }
+        .submit-btn {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+        button {
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Money to Members</h1>
+        <form action="/ssms/addmoney" method="POST">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Member ID</th>
+                        <th>Name</th>
+                        <th>Savings</th>
+                        <th>Loan</th>
+                        <th>Update Savings and Loans</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% members.forEach(member => { %>
+                    <tr>
+                        <td><%= member.Mem_id %></td>
+                        <td><%= member.Name %></td>
+                        <td>₹<%= member.Savings %></td>
+                        <td>₹<%= member.Loan %></td>
+                        <td>
+                            <input type="hidden" name="memberId" value="<%= member.Mem_id %>" />
+                            <input type="number" name="savingsUpdate" class="form-control" placeholder="Add Savings" />
+                            <input type="number" name="loanUpdate" class="form-control" placeholder="Add Loan" />
+                            <button type="submit" class="btn btn-primary mt-2">Update</button>
+                            
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <div class="submit-btn">
+                <button type="submit" class="btn btn-primary">Update All</button>
+            </div>
+        </form>
+        <div class="submit-btn">
+            <a href="/ssms/intro" class="btn btn-secondary">Back To Home</a>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

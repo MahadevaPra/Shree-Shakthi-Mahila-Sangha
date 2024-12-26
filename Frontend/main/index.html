@@ -3,106 +3,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stree Shakthi Mahila Sangha</title>
+    <title>Stree Shakti Mahila Sangha</title>
     <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
         /* Header Styling */
-header {
-    max-width: 100%;
-    height: auto;
-    background-color: #89c3fd; /* Dark blue background */
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+        header {
+            background: linear-gradient(90deg, #4dee08, #0529e0); /* Gradient background */
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
 
-header img {
-    width: 80px; /* Logo size */
-    height: auto;
-    margin-right: 20px;
-    border-radius: 50%;
-}
+        header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
 
-header h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0;
-    text-align: center;
-    flex-grow: 1;
-}
+        header h2 {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
+        }
 
-header b a {
-    color: rgb(252, 152, 152);
-    font-size: 16px;
-    text-decoration: none;
-    background-color: #f7e7a7; /* Yellow button background */
-    padding: 10px 20px;
-    border-radius: 25px;
-    transition: background-color 0.3s ease;
-}
+        header b a {
+            color: white;
+            font-size: 16px;
+            text-decoration: none;
+            background-color: #ffcc00;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-header b a:hover {
-    background-color: #ff9900;
-    color: #fff; /* Darker yellow on hover */
-}
+        header b a:hover {
+            background-color: #ff9900;
+            color: #fff;
+        }
 
         /* Marquee Container */
-.marquee-container {
-    width: 100%;
-    background-color: #ffffcc;  /* Light background */
-    border-radius: 8px;
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: 1px solid #ffcc00; /* Yellow border */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+        .marquee-container {
+            width: 100%;
+            background-color: #0ae9ed;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            border: 2px solid #0c9ef9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-/* Styling for the symbol */
-.marquee-symbol {
-    margin-right: 10px;  /* Space between symbol and text */
-    font-size: 22px;  /* Bigger size for symbol */
-}
+        .marquee-container marquee {
+            font-size: 16px;
+            color: #0b0b0b;
+        }
 
-/* Hover Effect on Marquee */
-.marquee-container marquee:hover {
-    color: #333;
-    cursor: pointer;
-    animation: marqueeHighlight linear 10s infinite;
-}
+        .marquee-symbol {
+            margin-right: 10px;
+            font-size: 22px;
+        }
 
-/* Animation for marquee hover effect */
-@keyframes marqueeHighlight {
-    0% {
-        transform: scale(1);
+        /* Carousel Container */
+        .carousel {
+            position: relative;
+            width: 85%; /* Increased width */
+            max-width: 800px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-images img {
+            width: 100%;
+            flex-shrink: 0;
+            border-radius: 10px;
+        }
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .carousel-buttons button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .carousel-buttons button:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .styled-paragraph {
+        background: linear-gradient(135deg, #ffcccc, #ffe6b3, #ccffcc, #cce6ff);
+        padding: 20px;
+        font-family: 'Times New Roman', Times, serif;
+        line-height: 1.5;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        margin: 20px auto;
+        max-width: 1200px;
+        position: relative;
+        overflow: hidden;
     }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
 
+    /* Decorative Border Line */
+    .styled-paragraph::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 5px;
+        background: linear-gradient(to bottom, #ff7b54, #ffcc33);
+        border-radius: 15px 0 0 15px;
+    }
+
+    /* Text Styling */
+    .styled-paragraph p {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.8;
+        text-align: justify;
+        background: -webkit-linear-gradient(#333, #666);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    /* Highlighted Words */
+    .styled-paragraph span {
+        font-weight: bold;
+        color: #ff4500;
+        background: linear-gradient(to right, #fffa65, #ffa726);
+        padding: 2px 5px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(255, 165, 0, 0.5);
+    }
+
+    /* Hover Effects */
+    .styled-paragraph:hover {
+        transform: translateY(-5px);
+        transition: all 0.3s ease;
+    }
+
+    .styled-paragraph p:hover {
+        -webkit-text-fill-color: #000;
+        background: none;
+    }
+
+    footer {
+            background: linear-gradient(to right, #ffcc00, #ff7f50);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            border-top: 5px solid #ffcc33;
+        }
+
+        footer p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        footer p:first-of-type {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                text-align: center;
+            }
+
+            header img {
+                margin: 0 auto;
+            }
+
+            header h2 {
+                margin: 10px 0;
+            }
+
+            header b {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .marquee-container {
+                font-size: 14px;
+            }
+
+            .carousel {
+                width: 100%;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <img src="C:\Users\mahad\Desktop\github\Shree-Shakthi-Mahila-Sangha\images\logo.jpg" alt="Logo">
-        <h2>Stree Shakti Mahila Sangha , Mysuru</h2>
+        <img src="/image/logo" alt="Logo">
+        <h2>Stree Shakti Mahila Sangha, Mysuru</h2>
         <b><a href="/ssms/signin">Sign In / Sign Up</a></b>
     </header>
+
     <main>
         <div class="marquee-container">
             <marquee><span class="marquee-symbol">🔔</span> Mahila Shakti Kendra (MSK) Scheme, under Ministry of Women and Child Development, was approved in November, 2017</marquee>
-            <marquee><span class="marquee-symbol">🔔</span>ಕಾಯಕ ಯೋಜನೆಯಡಿ ಸ್ವ-ಸಹಾಯ ಸಂಘಗಳು 10 ಲಕ್ಷ ರೂ. ವರೆಗೆ ಶೂನ್ಯ ಬಡ್ಡಿಯ ಸಾಲ ಪಡೆಯಬಹುದು. ಇದು ಮಹಿಳಾ ಸಂಘಗಳಿಗೆ ತಮ್ಮ ಉತ್ಪಾದನಾ ಚಟುವಟಿಕೆಗಳನ್ನು ವಿಸ್ತರಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ.</marquee>
+            <marquee><span class="marquee-symbol">🔔</span> ಕಾರ್ಯ ಯೋಜನೆಯಡಿ ಸ್ವ-ಸಹಾಯ ಅಸಂಘಗಳು 10 ಲಕ್ಷ ರೂ. ವರೆಗೆ ಶೂನ್ಯ ಬಡ್ಡಿಯ ಸಾಲ ಪಡೆಯಬಹುದು. ಇದು ಮಹಿಳಾ ಸಂಘಗಳೆಗೆ ತಮ್ಮ ಉತ್ಪಾದನ ಚಟುವಟಿಕೆಗಳನ್ನು ವಿಸ್ತರಿಸಲು ಸಹಾಯ ಮಾಡಿತೆ.</marquee>
         </div>
-        <img src="C:\Users\mahad\Desktop\github\Shree-Shakthi-Mahila-Sangha\images\image1.jpg" alt="Placeholder image" class="banner">
-        <p>Shree Shakthi Mahila Sangha is a women's organization based in Bengaluru, Karnataka. It was established in 1999 and has been actively working for the upliftment and development of women in the city. The organization provides various services to women, including helplines, counseling, legal aid, vocational training, and microfinance. It also runs several initiatives to empower women and create awareness about their rights. Shree Shakthi Mahila Sangha has been recognized for its work in empowering women and has received several awards and accolades.</p>
+
+        <!-- Carousel -->
+        <div class="carousel">
+            <div class="carousel-images">
+                <img src="/image/image1.jpg" alt="Banner 1">
+                <img src="/image/image3.jpg" alt="Banner 2">
+                <img src="/image/image4.jpeg" alt="Banner 3">
+                <img src="/image/image5.jpg" alt="Banner 4">
+            </div>
+            <div class="carousel-buttons">
+                <button id="prev">&#9664;</button>
+                <button id="next">&#9654;</button>
+            </div>
+        </div>
+
+        <p class="styled-paragraph">Shree Shakthi Mahila Sangha is a women's organization based in Bengaluru, Karnataka. It was established in 1999 and has been actively working for the upliftment and development of women in the city. The organization provides various services to women, including helplines, counseling, legal aid, vocational training, and microfinance. It also runs several initiatives to empower women and create awareness about their rights. Shree Shakthi Mahila Sangha has been recognized for its work in empowering women and has received several awards and accolades.</p>
     </main>
+
+    <footer>
+        <p>Contact us: 9876543210 | stree-shakti@example.com</p>
+        <p>&copy; 2024 Stree Shakti Mahila Sangha, Mysuru | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        const carouselImages = document.querySelector('.carousel-images');
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+
+        let currentIndex = 0;
+
+        const updateCarousel = () => {
+            const imageWidth = carouselImages.children[0].getBoundingClientRect().width;
+            carouselImages.style.transform = `translateX(-${currentIndex * imageWidth}px)`;
+        };
+
+        prevButton.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + carouselImages.children.length) % carouselImages.children.length;
+            updateCarousel();
+        });
+
+        nextButton.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % carouselImages.children.length;
+            updateCarousel();
+        });
+
+        // Auto-slide every 5 seconds
+        setInterval(() => {
+            currentIndex = (currentIndex + 1) % carouselImages.children.length;
+            updateCarousel();
+        }, 5000);
+    </script>
 </body>
 </html>

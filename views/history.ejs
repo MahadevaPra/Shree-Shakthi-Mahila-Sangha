@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stree Shakthi Mahila Sangha | History</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #343a40;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        .container {
+            display: flex;
+            padding: 2rem;
+        }
+        .sidebar {
+            width: 250px;
+            background-color:#007bff;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-right: 2rem;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .sidebar ul li {
+            margin: 1rem 0;
+        }
+        .sidebar ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        .sidebar ul li a:hover {
+            color:black;
+            text-decoration: underline;
+        }
+        .content {
+            flex-grow: 1;
+            background-color: #ffffff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #343a40;
+            color: white;
+        }
+        td {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul>
+                <li><a href="/ssms/intro">Home</a></li>
+                <li><a href="/members">Members</a></li>
+                <li><a href="/ssms/add-members">Add Members</a></li>
+                <li><a href="/ssms/history">History</a></li>
+                <li><a href="/ssms/helpdesk">Help Desk</a></li>
+                <li><a href="/ssms">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <h1>Member and Transaction History</h1>
+
+            <!-- Displaying Member Data -->
+            <h2>Members List</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Member ID</th>
+                        <th>Name</th>
+                        <th>Created At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% members.forEach(member => { %>
+                        <tr>
+                            <td><%= member.Mem_id %></td>
+                            <td><%= member.Name %></td>
+                            <td><%= new Date(member.created_at).toLocaleString() %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+
+            <!-- Displaying Transaction Data -->
+            <h2>Transaction History</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Member ID</th>
+                        <th>Name</th>
+                        <th>Savings</th>
+                        <th>Loan</th>
+                        <th>Amount Saved Date</th>
+                        <th>Loan Given Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% transactions.forEach(transaction => { %>
+                        <tr>
+                            <td><%= transaction.Mem_id %></td>
+                            <td><%= transaction.Name %></td>
+                            <td>₹<%= transaction.Savings %></td>
+                            <td>₹<%= transaction.Loan %></td>
+                            <td><%= transaction.saved_at ? new Date(transaction.saved_at).toLocaleString() : 'N/A' %></td>
+                            <td><%= transaction.loan_given_at ? new Date(transaction.loan_given_at).toLocaleString() : 'N/A' %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <a href="/ssms/add-money"><button class="btn btn-primary mt-2">Back to Add Money</button></a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

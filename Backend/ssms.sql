@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2024 at 11:12 AM
+-- Generation Time: Dec 25, 2024 at 08:17 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -41,8 +41,11 @@ CREATE TABLE `admin_info` (
 --
 
 INSERT INTO `admin_info` (`id`, `S_id`, `User_id`, `Phone_num`, `Email`, `Password`) VALUES
-(1, 2, '1', 1234567984, 'ravi@gmail.com', '1235'),
-(3, 2, '2', 1234567984, 'mahadevaprasadcs23@gmail.com', 'Akas@123');
+(0, 2, '1', 1234567984, 'prasuprasu148@gmail.com', 'Prasad@1234'),
+(0, 2, '3', 123546877, 'prasad@gmail.com', 'Sangha@123'),
+(0, 2, '55842', 1234567984, 'mahadevaprasadcs23@gmail.com', 'Soma@321'),
+(0, 2, '3', 1234567984, 'isagards22@gmail.com', 'Prasad@1234'),
+(0, 3, '12', 1234567984, 'prasad@gmail.com', 'Prasad@123');
 
 -- --------------------------------------------------------
 
@@ -57,6 +60,16 @@ CREATE TABLE `members` (
   `Loan` int(50) NOT NULL,
   `Ac_number` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `members`
+--
+
+INSERT INTO `members` (`Mem_id`, `Name`, `Savings`, `Loan`, `Ac_number`) VALUES
+(1, 'prasad', 100, 0, 123456),
+(5, 'basamma', 200, 0, 2147483647),
+(6, 'basamma', 200, 0, 1234567890),
+(23, 'sanagamma', 200, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -75,27 +88,10 @@ CREATE TABLE `s_total` (
 --
 
 --
--- Indexes for table `admin_info`
---
-ALTER TABLE `admin_info`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `User_id` (`User_id`);
-
---
 -- Indexes for table `members`
 --
 ALTER TABLE `members`
   ADD PRIMARY KEY (`Mem_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `admin_info`
---
-ALTER TABLE `admin_info`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
