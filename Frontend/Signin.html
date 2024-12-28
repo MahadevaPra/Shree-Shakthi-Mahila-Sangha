@@ -166,6 +166,10 @@
             text-decoration: underline;
         }
 
+        .btnback {
+            text-decoration: none;
+        }
+
         /* Footer */
         footer {
             height: 100px;
@@ -238,8 +242,8 @@
 
         <form action="/ssms/login" method="get">
             <div class="form-group">
-                <input type="text" name="id" id="user-id" placeholder=" " required autofocus>
-                <label for="user-id">User ID &nbsp;*</label>
+                <input type="text" name="name" id="user-id" placeholder=" " required autofocus>
+                <label for="user-name">User Name &nbsp;*</label>
             </div>
 
             <div class="form-group">
@@ -256,6 +260,7 @@
                 <p><a href="/ssms/forgot">Forgot your password?</a></p>
             </div>
         </form>
+        <a href="/ssms" class="btnback">Back To Home</a>
     </div>
 
     <!-- Footer -->

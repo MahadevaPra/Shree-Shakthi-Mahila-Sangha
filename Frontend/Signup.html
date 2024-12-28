@@ -48,6 +48,12 @@
             text-decoration: none;
             color: #fff;
         }
+        .signin-link #back{
+            display: block;
+            margin-top: 10px;
+            width: 110px;
+            padding-left: 3px;
+        }
 
         .signin-link a:hover{
             text-decoration: #000000;
@@ -216,6 +222,7 @@
         <h2>Stree Shakti Sangha, Mysuru</h2>
         <div class="signin-link">
             <i>Already have an account? <a href="/ssms/signin">Sign In</a></i>
+            <a href="/ssms" id="back">Back to Home</a>
         </div>
     </header>
 
@@ -240,8 +247,8 @@
             <label for="Sanghaid">Sangha Id:</label>
             <input type="text" name="Sanghaid" id="Sanghaid" placeholder="Enter your Sangha id" required>
 
-            <label for="Name">User-id:</label>
-            <input type="text" name="Name" id="Name" placeholder="Enter your user-id" required>
+            <label for="Name">User Name</label>
+            <input type="text" name="Name" id="Name" placeholder="Enter your user name" required>
 
             <label for="phoneNumber">Phone Number:</label>
             <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Enter your mobile number">
