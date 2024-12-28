@@ -4,6 +4,7 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const path = require('path');
+const { name } = require('ejs');
 
 // Initialize Express app
 const app = express();
@@ -66,7 +67,8 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root', // replace with your MySQL username
   password: '', // replace with your MySQL password
-  database: 'ssms' // replace with your database name
+  database: 'ssms', // replace with your database name
+ // timezone: 'local' //Local time where the server is runnning
 });
 
 // Connect to the database
@@ -91,9 +93,12 @@ app.post('/register', (req, res) => {
       </script>`);
   }
 
+   const sliced = Name.slice(0,2);
+   const userName = "24"+sliced+"12";
+
   // Insert data into the database
-  const query = `INSERT INTO admin_info (S_id, User_id, Phone_num, Email, Password) VALUES (?, ?, ?, ?, ?)`;
-  db.query(query, [Sanghaid, Name, phoneNumber, email, Password], (err, result) => {
+  const query = `INSERT INTO admin_info (S_id, User_name, Phone_num, Email, Password) VALUES (?, ?, ?, ?, ?)`;
+  db.query(query, [Sanghaid, userName, phoneNumber, email, Password], (err, result) => {
     if (err) {
       console.error('Error inserting data: ', err);
       return res.status(500).send('Database error');
@@ -102,7 +107,7 @@ app.post('/register', (req, res) => {
     // Send success message
     res.status(200).send(`
       <script>
-        alert('Registration successful!');
+        alert("Registration is successful! Login with username: ${userName}");
         window.location.href = '/ssms/signin';
       </script>`);
   });
@@ -110,13 +115,13 @@ app.post('/register', (req, res) => {
 
 // POST route for login
 app.get('/ssms/login', (req, res) => {
-  const { id, Password } = req.query;
+  const { name, Password } = req.query;
 
   // Query to fetch user data
-  const query = `SELECT User_id, Password FROM admin_info WHERE User_id = ? AND Password = ?`;
+  const query = `SELECT User_name, Password FROM admin_info WHERE User_name = ? AND Password = ?`;
 
   // Execute the query
-  db.query(query, [id, Password], (err, results) => {
+  db.query(query, [name, Password], (err, results) => {
     if (err) {
       console.error('Database error:', err);
       return res.status(500).send('Database error');
@@ -134,7 +139,7 @@ app.get('/ssms/login', (req, res) => {
     // Login successful
     res.send(`
       <script>
-        alert("Login Successful");
+        alert("Login Successfull!");
         window.location.href = '/ssms/intro';
       </script>
     `);    
@@ -266,11 +271,6 @@ app.post('/ssms/addmoney', (req, res) => {
     return res.status(400).send('Invalid input data.');
   }
 
-  const currentDate = new Date(); // Get current DateTime
-
-  // Convert current date into MySQL compatible format (YYYY-MM-DD HH:MM:SS)
-  const formattedDate = currentDate.toISOString().slice(0, 19).replace('T', ' ');
-
   // Loop through the member IDs and update them one by one
   for (let i = 0; i < memberId.length; i++) {
     const member = memberId[i];
@@ -280,10 +280,14 @@ app.post('/ssms/addmoney', (req, res) => {
     // Update Query to Set saved_at and loan_given_at
     const updateQuery = `
         UPDATE members
-        SET Savings = Savings + ?, Loan = Loan - ?, saved_at = ?, loan_given_at = ?
+        SET 
+          Savings = Savings + ?, 
+          Loan = Loan - ?, 
+          saved_at = CASE WHEN ? > 0 THEN NOW() ELSE saved_at END, 
+          loan_given_at = CASE WHEN ? > 0 THEN NOW() ELSE loan_given_at END
         WHERE Mem_id = ?`;
 
-    db.query(updateQuery, [savings, loan, formattedDate, formattedDate, member], (err, result) => {
+    db.query(updateQuery, [savings, loan, savings, loan, member], (err, result) => {
       if (err) {
         console.error('SQL Error:', err.sqlMessage);
         return res.status(500).send('Database error. Please try again later.');
@@ -402,10 +406,14 @@ app.post('/submit-feedback', (req, res) => {
           console.error('Error inserting feedback:', err);
           return res.status(500).send('Failed to save feedback.');
       }
-      res.send('Feedback submitted successfully!');
-      res.redirect('/ssms/intro');
+      res.status(200).send(`
+        <script>
+          alert("Feedback submitted successfully!");
+          window.location.href = '/ssms/intro';
+          </script>`);
   });
 });
+
 // Start the server
 app.listen(3000, () => {
   console.log('Server is running on port 3000');
