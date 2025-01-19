@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stree Shakti Mahila Sangha | Intro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #3c78d8;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header img {
+            width: 60px;
+            height: auto;
+            border-radius: 50%;
+        }
+
+        header h2 {
+            flex-grow: 1;
+            text-align: center;
+            margin: 0;
+        }
+
+        header nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        header nav a {
+            color: #ffd700;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            display: flex;
+            flex: 1;
+        }
+
+        .sidebar {
+            width: 220px;
+            background: #343a40;
+            color: white;
+            padding: 1rem;
+            height: calc(100vh - 100px);
+            position: sticky;
+            top: 0;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar ul li a {
+            color: #f8f9fa;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: block;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background: #495057;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            background: #ffffff;
+            margin: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        main img {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+            display: block;
+            border: 4px solid #3c78d8;
+            border-radius: 8px;
+        }
+
+        main div {
+            margin: 2rem 0;
+        }
+
+        main div p {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            color: #495057;
+        }
+
+        .members-count {
+            color: #28a745;
+        }
+
+        .savings-count {
+            color: #ffc107;
+        }
+
+        .loan-count {
+            color: #dc3545;
+        }
+
+        button {
+            display: block;
+            margin: 0 auto;
+            padding: 0.8rem 1.5rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        button a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer {
+            background: #6c757d;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="/images/logo" alt="Logo">
+        <h2>Stree Shakti Mahila Sangha, Mysuru</h2>
+        <nav>
+            <a href="#">About</a>
+            <a href="#">Contact Us</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li><a href="/ssms/intro">Home</a></li>
+                <li><a href="/members">Members</a></li>
+                <li><a href="/ssms/add-members">Add Members</a></li>
+                <li><a href="/ssms/history">History</a></li>
+                <li><a href="/ssms/helpdesk">Help Desk</a></li>
+                <li><a href="/ssms">Logout</a></li>
+            </ul>
+        </div>
+
+        <main>
+            <img src="/images/image5.jpg" alt="Placeholder Image">
+            <div>
+                <p>Total Members: <span id="members-count" class="members-count"><%= totalMembers %></span></p>
+                <p>Grand Total of Savings: ₹<span id="savings-count" class="savings-count"><%= totalSavings %></span></p>
+                <p>Total Loan: ₹<span id="loan-count" class="loan-count"><%= totalLoans %></span></p>
+            </div>
+            <button><a href="/ssms/add-money">Add Money</a></button>
+        </main>
+    </div>
+
+    <footer>
+        <p>Contact us: 9876543210 | stree-shakti@example.com</p>
+        <p>&copy; 2024 Stree Shakti Mahila Sangha, Mysuru | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Function to animate numbers
+        function animateCount(element, start, end, duration) {
+            let startTime = null;
+            const step = (timestamp) => {
+                if (!startTime) startTime = timestamp;
+                const progress = Math.min((timestamp - startTime) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value;
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            };
+            requestAnimationFrame(step);
+        }
+
+        // Start animations when the DOM is fully loaded
+        document.addEventListener("DOMContentLoaded", () => {
+            const totalMembers = parseInt("<%= totalMembers %>", 10);
+            const totalSavings = parseInt("<%= totalSavings %>", 10);
+            const totalLoans = parseInt("<%= totalLoans %>", 10);
+
+            const membersCountElement = document.getElementById("members-count");
+            const savingsCountElement = document.getElementById("savings-count");
+            const loanCountElement = document.getElementById("loan-count");
+
+            animateCount(membersCountElement, 0, totalMembers, 2000);
+            animateCount(savingsCountElement, 0, totalSavings, 2000);
+            animateCount(loanCountElement, 0, totalLoans, 2000);
+        });
+    </script>
+</body>
+</html>
+
+
