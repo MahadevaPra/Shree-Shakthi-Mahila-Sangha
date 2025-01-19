@@ -9,10 +9,12 @@ This project is a web application developed to support women’s self-help group
 Prerequisites
 Before running this project, ensure you have the following installed on your system:
 
-Visual Studio Code (VSCode) - Download VSCode,
-Node.js - Download Node.js,
-XAMPP (or any server with phpMyAdmin) - Download XAMPP
+Visual Studio Code (VSCode) - Download VSCode (https://code.visualstudio.com/download),
+Node.js - Download Node.js (https://nodejs.org/en/download),
+XAMPP (or any server with phpMyAdmin) - Download XAMPP (https://www.apachefriends.org/download.html).
+
 Steps to Set Up and Run the Project
+
 1. Clone or Download the Project
 Download the project files and extract them to a desired location on your computer.
 
