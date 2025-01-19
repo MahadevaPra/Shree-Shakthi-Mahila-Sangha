@@ -4,33 +4,44 @@ const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const path = require('path');
+const dotenv = require('dotenv');
 const { name } = require('ejs');
+
+// Initialize dotenv for environment variables
+dotenv.config();
 
 // Initialize Express app
 const app = express();
 
+// Set view engine and views directory
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
-
-// Specify the directory for your views
-app.set('views', path.join(__dirname, '../views'));
 
 // Middleware for parsing form data
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Serve static files from the Frontend folder
+// Serve static files from Frontend and images directories
 app.use('/ssms', express.static(path.join(__dirname, '../Frontend')));
+app.use('/images', express.static(path.join(__dirname, '../images')));
 
-app.get('/image/logo', (req, res) => {
-  res.sendFile(path.join(__dirname, "../images/logo.jpg"));
+app.use('/images/logo', express.static(path.join(__dirname, '../images/logo.jpg')));
+
+// MySQL Database Connection
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: process.env.DB_USER, // using environment variable for username
+  password: process.env.DB_PASSWORD, // using environment variable for password
+  database: process.env.DB_NAME, // using environment variable for database
 });
 
-app.use('/image', express.static(path.join(__dirname, '../images')));
-
-app.get('/image/image2',(req,res) => {
-  res.sendFile(path.join(__dirname,"../images/image2.jpg"));
+// Connect to the database
+db.connect((err) => {
+  if (err) {
+    console.error('Error connecting to the database: ', err);
+    return;
+  }
+  console.log('Connected to MySQL Database');
 });
 
 // Routes for serving HTML pages
@@ -49,7 +60,7 @@ app.get('/ssms/signup', (req, res) => {
 app.get('/ssms/forgot', (req, res) => {
   res.sendFile(path.join(__dirname, '../Frontend/Forgot.html'));
 });
- 
+
 app.get('/ssms/add-members', (req, res) => {
   res.sendFile(path.join(__dirname, '../Frontend/add-members.html'));
 });
@@ -62,30 +73,12 @@ app.get('/ssms/logout', (req, res) => {
   res.sendFile(path.join(__dirname, '../Frontend/index.html'));
 });
 
-// MySQL Database Connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root', // replace with your MySQL username
-  password: '', // replace with your MySQL password
-  database: 'ssms', // replace with your database name
- // timezone: 'local' //Local time where the server is runnning
-});
-
-// Connect to the database
-db.connect((err) => {
-  if (err) {
-    console.error('Error connecting to the database: ', err);
-    return;
-  }
-  console.log('Connected to MySQL Database');
-});
-
 // POST route to register a new user
 app.post('/register', (req, res) => {
-  const { Sanghaid, Name, phoneNumber, email, Password, ConfirmPassword } = req.body;
+  const { Sanghaid, user_name, phoneNumber, email, Password, CPassword } = req.body;
 
   // Check if password and confirm password match
-  if (Password !== ConfirmPassword) {
+  if (Password.trim() !== CPassword.trim()) {
     return res.status(400).send(`
       <script>
         alert('Passwords do not match');
@@ -93,12 +86,15 @@ app.post('/register', (req, res) => {
       </script>`);
   }
 
-   const sliced = Name.slice(0,2);
-   const userName = "24"+sliced+"12";
+  const sliced = user_name.slice(0, 2);
+  const userName = "24" + sliced + "12";
+
+  // Hash password before storing it
+  const hashedPassword = bcrypt.hashSync(Password, 10);
 
   // Insert data into the database
-  const query = `INSERT INTO admin_info (S_id, User_name, Phone_num, Email, Password) VALUES (?, ?, ?, ?, ?)`;
-  db.query(query, [Sanghaid, userName, phoneNumber, email, Password], (err, result) => {
+  const query = `INSERT INTO admin_information (S_id, User_name, Phone_num, Email, Password) VALUES (?, ?, ?, ?, ?)`;
+  db.query(query, [Sanghaid, userName, phoneNumber, email, hashedPassword], (err, result) => {
     if (err) {
       console.error('Error inserting data: ', err);
       return res.status(500).send('Database error');
@@ -115,23 +111,24 @@ app.post('/register', (req, res) => {
 
 // POST route for login
 app.get('/ssms/login', (req, res) => {
-  const { name, Password } = req.query;
+  const { id, Password } = req.query;
 
   // Query to fetch user data
-  const query = `SELECT User_name, Password FROM admin_info WHERE User_name = ? AND Password = ?`;
+  const query = `SELECT User_name, Password FROM admin_information WHERE User_name = ?`;
 
   // Execute the query
-  db.query(query, [name, Password], (err, results) => {
+  db.query(query, [id], (err, results) => {
     if (err) {
       console.error('Database error:', err);
       return res.status(500).send('Database error');
     }
 
     // Check if user exists and credentials match
-    if (results.length === 0) {
+    if (results.length === 0 || !bcrypt.compareSync(Password, results[0].Password)) {
       return res.status(401).send(`
         <script>
           alert("Invalid user details");
+          console.log(req.query);
           window.history.back();
         </script>`);
     }
@@ -141,14 +138,13 @@ app.get('/ssms/login', (req, res) => {
       <script>
         alert("Login Successfull!");
         window.location.href = '/ssms/intro';
-      </script>
-    `);    
+      </script>`);
   });
 });
 
 // POST route for password reset
 app.post('/ssms/forgot', (req, res) => {
-  const { id, Password, cPassword } = req.body;
+  const { user_id, Password, cPassword } = req.body;
 
   if (Password !== cPassword) {
     return res.status(400).send(`
@@ -158,9 +154,12 @@ app.post('/ssms/forgot', (req, res) => {
       </script>`);
   }
 
-  const updateQuery = `UPDATE admin_info SET Password = ? WHERE User_id = ?`;
+  // Hash new password
+  const hashedPassword = bcrypt.hashSync(Password, 10);
 
-  db.query(updateQuery, [Password, id], (err, results) => {
+  const updateQuery = `UPDATE admin_information SET Password = ? WHERE User_name = ?`;
+
+  db.query(updateQuery, [hashedPassword, user_id], (err, results) => {
     if (err) {
       console.error('Cannot update password:', err);
       return res.status(400).send(`
@@ -186,8 +185,8 @@ app.post('/ssms/forgot', (req, res) => {
   });
 });
 
+// Route for adding members
 app.post('/ssms/add-members', (req, res) => {
-  // Destructure form data
   const { 'member-id': memberId, name, savings, loan, 'acc-no': accNo } = req.body;
 
   // Validate input data
@@ -196,18 +195,15 @@ app.post('/ssms/add-members', (req, res) => {
       <script>
         alert('All fields are required.');
         window.history.back();
-      </script>
-    `);
+      </script>`);
   }
 
-  // Parse numeric fields
   const parsedSavings = parseFloat(savings);
   const parsedLoan = parseFloat(loan);
 
   // Query to insert the new member
-  const query = `INSERT INTO members (Mem_id, Name, Savings, Loan, Ac_number) VALUES (?, ?, ?, ?, ?)`;
+  const query = `INSERT INTO newmembers (Mem_id, Name, Savings, Loan, Ac_number) VALUES (?, ?, ?, ?, ?)`;
 
-  // Execute query
   db.query(query, [memberId, name, parsedSavings, parsedLoan, accNo], (err, result) => {
     if (err) {
       console.error('Error adding member to the database:', err);
@@ -215,26 +211,23 @@ app.post('/ssms/add-members', (req, res) => {
         <script>
           alert('Database error. Please try again later.');
           window.history.back();
-        </script>
-      `);
+        </script>`);
     }
 
     res.send(`
       <script>
         alert('Member added successfully!');
         window.location.href = '/ssms/add-members';
-      </script>
-    `);
+      </script>`);
   });
 });
-
 
 // Route to fetch and display all members
 // app.get('/ssms/member', (req, res) => {
   app.get('/members', (req, res) => {
 
   // Query to fetch all members from the members table
-  const query = 'SELECT * FROM members';
+  const query = 'SELECT * FROM newmembers';
 
   db.query(query, (err, result) => {
     if (err) {
@@ -251,7 +244,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/ssms/add-money', (req, res) => {
-  const query = 'SELECT * FROM members';
+  const query = 'SELECT * FROM newmembers';
   db.query(query, (err, result) => {
     if (err) {
       console.error('Error fetching members:', err);
@@ -279,7 +272,7 @@ app.post('/ssms/addmoney', (req, res) => {
 
     // Update Query to Set saved_at and loan_given_at
     const updateQuery = `
-        UPDATE members
+        UPDATE newmembers
         SET 
           Savings = Savings + ?, 
           Loan = Loan - ?, 
@@ -300,7 +293,7 @@ app.post('/ssms/addmoney', (req, res) => {
                 COUNT(*) AS totalMembers, 
                 SUM(Savings) AS totalSavings, 
                 SUM(Loan) AS totalLoans 
-            FROM members`;
+            FROM newmembers`;
 
         db.query(totalQuery, (err, totals) => {
           if (err) {
@@ -311,7 +304,7 @@ app.post('/ssms/addmoney', (req, res) => {
           const { totalMembers, totalSavings, totalLoans } = totals[0];
 
           const tQuery = `
-              INSERT INTO s_total (T_members, T_money, T_loan)
+              INSERT INTO stotal (T_members, T_money, T_loan)
               VALUES (?, ?, ?)
               ON DUPLICATE KEY UPDATE 
                   T_members = VALUES(T_members),
@@ -341,7 +334,7 @@ app.get('/ssms/intro', (req, res) => {
           COUNT(*) AS totalMembers, 
           SUM(Savings) AS totalSavings, 
           SUM(Loan) AS totalLoans 
-      FROM members
+      FROM newmembers
   `;
   
   db.query(query, (err, results) => {
@@ -363,7 +356,7 @@ app.get('/ssms/intro', (req, res) => {
 
 app.get('/ssms/history', (req, res) => {
   // Fetch the members with their creation date
-  const query1 = 'SELECT * FROM members ORDER BY created_at DESC'; 
+  const query1 = 'SELECT * FROM newmembers ORDER BY created_at DESC'; 
 
   db.query(query1, (err, membersResult) => {
     if (err) {
@@ -374,7 +367,7 @@ app.get('/ssms/history', (req, res) => {
     // Fetch the transaction details from members (where saved_at or loan_given_at is not null)
     const query2 = `
       SELECT Mem_id, Name, Savings, Loan, saved_at, loan_given_at
-      FROM members
+      FROM newmembers
       WHERE saved_at IS NOT NULL OR loan_given_at IS NOT NULL
       ORDER BY saved_at DESC, loan_given_at DESC;
     `;
@@ -399,7 +392,7 @@ app.post('/submit-feedback', (req, res) => {
   const feedbackText = req.body.feedback;
   const problemText = req.body.problem;
 
-  const query = `INSERT INTO user_feedback (user_id, feedback_text, problem_text) VALUES (?, ?, ?)`;
+  const query = `INSERT INTO userfeedback (user_id, feedback_text, problem_text) VALUES (?, ?, ?)`;
 
   db.query(query, [userId, feedbackText, problemText], (err, result) => {
       if (err) {

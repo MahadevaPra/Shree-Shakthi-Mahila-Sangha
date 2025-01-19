@@ -217,7 +217,7 @@
 <body>
     <header>
         <div class="logo">
-            <img src="/image/logo" alt="Logo">
+            <img src="/images/logo" alt="Logo">
         </div>
         <h2>Stree Shakti Sangha, Mysuru</h2>
         <div class="signin-link">
@@ -248,7 +248,7 @@
             <input type="text" name="Sanghaid" id="Sanghaid" placeholder="Enter your Sangha id" required>
 
             <label for="Name">User Name</label>
-            <input type="text" name="Name" id="Name" placeholder="Enter your user name" required>
+            <input type="text" name="user_name" id="Name" placeholder="Enter your user name" required>
 
             <label for="phoneNumber">Phone Number:</label>
             <input type="tel" name="phoneNumber" id="phoneNumber" placeholder="Enter your mobile number">
@@ -257,12 +257,10 @@
             <input type="email" name="email" id="email" placeholder="Enter your Email">
 
             <label for="Password">Password:</label>
-            <input type="password" name="Password" id="Password" placeholder="Type your password" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-            title="Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.">
+            <input type="password" name="Password" id="Password" placeholder="Type your password" required pattern="^[A-Z]{1}[a-z]{3,5}[^\w\d\s]{1}[0-9]{4}$" title="Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.">
 
             <label for="ConfirmPassword">Confirm Password:</label>
-            <input type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm your password" required pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-            title="Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.">
+            <input type="password" name="CPassword" id="ConfirmPassword" placeholder="Confirm your password" required pattern="^[A-Z]{1}[a-z]{3,5}[^\w\d\s]{1}[0-9]{4}$" title="Password must be at least 8 characters, include uppercase, lowercase, a number, and a special character.">
 
             <div class="form-buttons">
                 <input type="submit" value="Submit" class="Button">
