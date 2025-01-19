@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Shree-Shakthi-Mahila-Sangha
 This is a web development project made to help women to digitalise their Mahila Sangha , Which helps to keep their records safe and adding money or taking loan from their bank to digital, which reduces the manual paper work and also ensures the security of their money.
 =======
@@ -56,4 +55,3 @@ Open the link in your web browser to access the application.
 Notes
 Ensure that your Apache and MySQL servers are running while using the application.
 If you face any issues, double-check the database setup and ensure all packages are correctly installed.
->>>>>>> d4bcd1d98f88306fb3fb94c92a9a042fbc417e6e
