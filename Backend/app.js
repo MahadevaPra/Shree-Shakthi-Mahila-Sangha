@@ -29,10 +29,11 @@ app.use('/images/logo', express.static(path.join(__dirname, '../images/logo.jpg'
 
 // MySQL Database Connection
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: process.env.DB_USER, // using environment variable for username
-  password: process.env.DB_PASSWORD, // using environment variable for password
-  database: process.env.DB_NAME, // using environment variable for database
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '', // Default to empty if not set
+  database: process.env.DB_NAME || 'ssms',
+  port: process.env.DB_PORT || 3307, // Default MySQL port
 });
 
 // Connect to the database
@@ -93,7 +94,7 @@ app.post('/register', (req, res) => {
   const hashedPassword = bcrypt.hashSync(Password, 10);
 
   // Insert data into the database
-  const query = `INSERT INTO admin_information (S_id, User_name, Phone_num, Email, Password) VALUES (?, ?, ?, ?, ?)`;
+  const query = `INSERT INTO admin_info (S_id, User_id, Phone_num, Email, Password) VALUES (?, ?, ?, ?, ?)`;
   db.query(query, [Sanghaid, userName, phoneNumber, email, hashedPassword], (err, result) => {
     if (err) {
       console.error('Error inserting data: ', err);
@@ -114,7 +115,7 @@ app.get('/ssms/login', (req, res) => {
   const { id, Password } = req.query;
 
   // Query to fetch user data
-  const query = `SELECT User_name, Password FROM admin_information WHERE User_name = ?`;
+  const query = `SELECT User_id, Password FROM admin_info WHERE User_id = ?`;
 
   // Execute the query
   db.query(query, [id], (err, results) => {
@@ -155,11 +156,11 @@ app.post('/ssms/forgot', (req, res) => {
   }
 
   // Hash new password
-  const hashedPassword = bcrypt.hashSync(Password, 10);
+  //const hashedPassword = bcrypt.hashSync(Password, 10);
 
-  const updateQuery = `UPDATE admin_information SET Password = ? WHERE User_name = ?`;
+  const updateQuery = `UPDATE admin_info SET Password = ? WHERE User_id = ?`;
 
-  db.query(updateQuery, [hashedPassword, user_id], (err, results) => {
+  db.query(updateQuery, [cPassword, user_id], (err, results) => {
     if (err) {
       console.error('Cannot update password:', err);
       return res.status(400).send(`
@@ -202,7 +203,7 @@ app.post('/ssms/add-members', (req, res) => {
   const parsedLoan = parseFloat(loan);
 
   // Query to insert the new member
-  const query = `INSERT INTO newmembers (Mem_id, Name, Savings, Loan, Ac_number) VALUES (?, ?, ?, ?, ?)`;
+  const query = `INSERT INTO members (Mem_id, Name, Savings, Loan, Ac_number) VALUES (?, ?, ?, ?, ?)`;
 
   db.query(query, [memberId, name, parsedSavings, parsedLoan, accNo], (err, result) => {
     if (err) {
@@ -227,7 +228,7 @@ app.post('/ssms/add-members', (req, res) => {
   app.get('/members', (req, res) => {
 
   // Query to fetch all members from the members table
-  const query = 'SELECT * FROM newmembers';
+  const query = 'SELECT * FROM members';
 
   db.query(query, (err, result) => {
     if (err) {
@@ -244,7 +245,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/ssms/add-money', (req, res) => {
-  const query = 'SELECT * FROM newmembers';
+  const query = 'SELECT * FROM members';
   db.query(query, (err, result) => {
     if (err) {
       console.error('Error fetching members:', err);
@@ -272,7 +273,7 @@ app.post('/ssms/addmoney', (req, res) => {
 
     // Update Query to Set saved_at and loan_given_at
     const updateQuery = `
-        UPDATE newmembers
+        UPDATE members
         SET 
           Savings = Savings + ?, 
           Loan = Loan - ?, 
@@ -293,7 +294,7 @@ app.post('/ssms/addmoney', (req, res) => {
                 COUNT(*) AS totalMembers, 
                 SUM(Savings) AS totalSavings, 
                 SUM(Loan) AS totalLoans 
-            FROM newmembers`;
+            FROM members`;
 
         db.query(totalQuery, (err, totals) => {
           if (err) {
@@ -304,7 +305,7 @@ app.post('/ssms/addmoney', (req, res) => {
           const { totalMembers, totalSavings, totalLoans } = totals[0];
 
           const tQuery = `
-              INSERT INTO stotal (T_members, T_money, T_loan)
+              INSERT INTO s_total (T_members, T_money, T_loan)
               VALUES (?, ?, ?)
               ON DUPLICATE KEY UPDATE 
                   T_members = VALUES(T_members),
@@ -334,7 +335,7 @@ app.get('/ssms/intro', (req, res) => {
           COUNT(*) AS totalMembers, 
           SUM(Savings) AS totalSavings, 
           SUM(Loan) AS totalLoans 
-      FROM newmembers
+      FROM members
   `;
   
   db.query(query, (err, results) => {
@@ -356,7 +357,7 @@ app.get('/ssms/intro', (req, res) => {
 
 app.get('/ssms/history', (req, res) => {
   // Fetch the members with their creation date
-  const query1 = 'SELECT * FROM newmembers ORDER BY created_at DESC'; 
+  const query1 = 'SELECT * FROM members ORDER BY created_at DESC'; 
 
   db.query(query1, (err, membersResult) => {
     if (err) {
@@ -367,7 +368,7 @@ app.get('/ssms/history', (req, res) => {
     // Fetch the transaction details from members (where saved_at or loan_given_at is not null)
     const query2 = `
       SELECT Mem_id, Name, Savings, Loan, saved_at, loan_given_at
-      FROM newmembers
+      FROM members
       WHERE saved_at IS NOT NULL OR loan_given_at IS NOT NULL
       ORDER BY saved_at DESC, loan_given_at DESC;
     `;
